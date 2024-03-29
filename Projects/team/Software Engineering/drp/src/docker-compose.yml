@@ -1,0 +1,101 @@
+# --- PROJECT ---
+# 2023 CSC 4610-4620
+# Demand Response Portal
+# Evyn Price, Enora Boscher, Serena Labelle, Elijah Monroe, Mykola (Nick) Omelchenko, Shelby Smith, William Goodson, Won (Bryan) Lee
+
+# --- ABOUT ---
+# docker-compose.yml
+# This docker compose file runs the MariaDB database and flask web server for the demand response portal project.
+# To run, ensure that docker is installed on your system: https://docs.docker.com/engine/install/
+# Then run the command " docker compose up -d "
+
+# Use root/example as user/password credentials
+version: '3.1'
+services:
+  db:
+    restart: unless-stopped
+    container_name: db
+    image: mariadb:11.1.2-jammy
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"  # Map the MariaDB port to the host
+    volumes:
+      - ./data/db/data:/var/lib/mysql
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/${DB_SCHEMA}
+      - ./db/triggers.sql:/docker-entrypoint-initdb.d/${DB_TRIGGERS}
+    healthcheck:
+      test: ["CMD", "mysql -h db -u ${DB_USER} -p ${DB_PASSWORD} -e 'SELECT 1;'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - drp_network
+
+  redis:
+    image: redis
+    container_name: db-cache
+    ports:
+      - "6379:6379"
+    command: redis-server --loglevel verbose
+    restart: unless-stopped
+    networks:
+      - drp_network
+    depends_on:
+      - db
+
+  web:
+    restart: unless-stopped
+    container_name: flask
+    build:
+      context: ./web/app  # Specify the context for the Flask application Dockerfile
+    ports:
+      - "8000:8000"  # Map the web application port to the host
+    volumes:
+      - ./web/app:/app  # Mount your web application source code into the container
+    depends_on:
+      - db  # Ensure the database container is started first
+    networks:
+      - drp_network
+    environment:
+      # Pass database credentials from .env to Flask
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+
+  db-importer:
+    restart: on-failure
+    container_name: db-importer
+    build:
+      context: ./db  # Specify the context for the script Dockerfile
+    volumes:
+      - ./db:/app  # Mount your web application source code into the container
+    depends_on:
+      - db  # Ensure the database container is started first
+    networks:
+      - drp_network
+    environment:
+      # Pass database credentials from .env to Database
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+
+  nginx:
+    container_name: nginx
+    image: nginx:1.25.3
+    volumes:
+      - ./web/static:/etc/nginx/static
+      - ./web/nginx-config:/etc/nginx/conf.d
+    ports:
+      - "80:80"  # Map port 80 on the host to port 80 in the container
+      - "443:443"
+    depends_on:
+      - web  # Ensure the web application container is started first
+    networks:
+      - drp_network
+
+networks:
+  drp_network:

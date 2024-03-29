@@ -1,0 +1,75 @@
+body{
+    background-color: #1E1E1E !important;
+    color: #EBEBEB !important;
+}
+.card-body{
+    background-color: #1C3044 !important;
+	color: #EBEBEB !important;
+}
+.card-header{
+    background-color: #296F9D !important;
+    color: #EBEBEB !important;
+}
+.accordion{
+    --bs-accordion-btn-bg: #296F9D;
+    --bs-accordion-active-bg: #296F9D;
+    --bs-accordion-bg: #1C3044;  
+}
+.accordion-button::after {
+    order: -1;
+    background-image: url("../images/IconInactive.png");
+    transition: all 0.5s;
+}
+.accordion-button:not(.collapsed)::after{
+    order: -1;
+    background-image: url('../images/IconActive.png');
+}
+.btn-primary{
+    background-color: #1C3044 !important;
+    color: #EBEBEB !important;
+}
+.btn-secondary{
+    background-color: #EBEBEB !important;
+    color: #1E1E1E !important;
+    border: #EBEBEB !important;
+}
+.custom-success{
+    color: #06D6A0 !important;
+}
+
+.custom-red{
+    color: #ef476f !important;
+}
+
+.btn-success{
+    background-color: #06D6A0 !important;
+    color: #1E1E1E !important;
+}
+
+.btn-red{
+    background-color: #ef476f !important;
+    color:#1E1E1E !important;
+}
+.secondary{
+    background-color: #296F9D !important;
+    color: #EBEBEB !important;
+}
+.tertiary{
+    background-color: #1C3044 !important;
+    color: #EBEBEB !important;
+}
+.bice-blue{
+    color: #296F9D !important;
+}
+
+.prussian-blue{
+    color: #1C3044 !important;
+}
+
+.eerie-black{
+    color: #1E1E1E !important;
+}
+
+.off-white{
+    color: #EBEBEB !important;
+}

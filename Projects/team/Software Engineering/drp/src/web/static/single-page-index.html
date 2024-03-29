@@ -1,0 +1,1659 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Demand Response Portal</title>   
+        <link rel="shortcut icon" href="#">
+
+
+        <!--CSS References-->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/sweetalert2.min.css" rel="stylesheet">
+        <link href="/css/colors.css" rel="stylesheet">
+
+        <script src="/js/bokeh.min.js"></script>
+        <script src="/js/bokeh-widgets.min.js"></script>
+        <script src="/js/bokeh-tables.min.js"></script>
+    </head>
+
+    <!--Beginning of Site Body-->
+    <body class="container-fluid p-0">
+        <div class="">
+            <!--Header Bar-->
+            <div class="row col-12 align-items-end align-middle" id="divHeaderBar">
+                <div class="col-1 px-0 m-0 imgHome" id="imgHome">
+                    <img src="images/logo.jpg" alt="Company Logo" class="img-fluid">
+                </div>
+                <div class="col col-6 align-bottom align-middle mb-3 px-3">
+                    <h1 class="mb-0">Power Company LLC.</h1>
+                </div>
+            </div>
+
+            <!--Landing Navigation Bar-->
+            <div class="row secondary align-content-start col-12 mb-4" id="divLandingNavBar" style="text-align: center;">
+                <div class="col-auto p-2 ms-4">
+                    <button id="btnLoginNav" class="btn fa fa-right-to-bracket fa-border fa-1x btn-success btnLoginNav"></button>
+                    <p class="mb-0">Log in</p>
+                </div>
+
+                <div class="col-auto p-2 ms-2">
+                    <button id="btnRegisterAcct" class="btn fa fa-plus fa-border fa-1x btn-red"></button>
+                    <p class="mb-0">Register</p>
+                </div>
+            </div>
+
+            <!--Landing Page-->
+            <div class="" id="divLandingPage">
+                <!--Overhead Description section-->
+                <div class="text-center col-12 p-3">
+                    <h1 class="custom-success">Demand Response Portal</h1>
+                    <p class="col-6 offset-3">A responsive and accessible web portal that allows power customers and utilities to interact with demaand response data in real time to ensure fair rewards for energy-saving behaviors while offering valuable insight for providers</p>
+                </div>
+
+                <div class="text-center p-5 m-0 col-12" style="background-color: #EBEBEB;">
+
+                    <div>
+                        <h3 class="eerie-black">What We Offer</h3>
+                        <p class="eerie-black col-8 offset-2">We offer demand response statistics and real-time load visualizations to foster transparency and enable savings for customers and providers alike.</p>
+                    </div>
+                    <div class="row">
+                        <div class="card col p-0 m-3">
+                            <div class="card-header">
+                                <h5>Real-Time Usage</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>See per-meter usage in real time, including the predicted load during demand response event periods. This allows customers to tangibly understand how they can conserve power during peak periods, saving both the customer and the power provider money.</p>
+                            </div>
+                        </div>
+
+                        <div class="card col p-0 my-3">
+                            <div class="card-header">
+                                <h5>System at a Glance</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>The utility dashboard shows a summary of the entire demand response program in one place, while allowing distributors to drill down to per-meter or per-organization statistics</p>
+                            </div>
+                        </div>
+
+                        <div class="card col p-0 m-3">
+                            <div class="card-header">
+                                <h5>Historical Trends</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Compare results of previous demand response events to improve incentive rates or report on program effectiveness</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--Login Page -->
+            <div class="col-12 row" id="divLogin" style="display:none;">
+                <div class="d-flex col-12 align-items-center justify-content-center">
+                    <div class="card col-12 col-md-8">
+                        <div class="card-header dashboard-header">
+                            <h4 class="text-center">Login</h4>
+                        </div>
+                        <div class="card-body dashboard-body">
+                            <form>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtLogEmail" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                                    <div class="invalid-feedback">You must enter an email</div>
+                                </div>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtLogPassword" type="password" aria-label="Enter Password" placeholder="Password" required>
+                                    <div class="invalid-feedback">You must enter a Password</div>
+                                </div>
+                                <button type="button" class="btn btn-link" id = "buttonResetPassword"> Reset Password</button>
+                                <button class="btn btn-primary mt-2 col-12 rounded-0" type="button" id="btnLogin">
+                                    <span id="btnLoginSpinner" class="spinner-border spinner-border-sm" style="display:none" role="status" aria-hidden="true"></span>
+                                    <p1 id="btnLoginLabel">Login</p1>
+                                </button>
+                                <button class="btn btn-dark mt-2 col-12 rounded-0 btnRegNav" type="button" id="btnRegisterNav">Register Account</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Register Account Page -->
+            <div class="col-12 row" id="divRegister" style="display:none;">
+                <div class="d-flex col-12 align-items-center justify-content-center">
+                    <div class="card col-12 col-md-8">
+                        <div class="card-header dashboard-header">
+                            <h4 class="text-center">Create New Account</h4>
+                        </div>
+
+                        <div class="card-body dashboard-body">
+                            <form id = "registerForm">
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtRegID" name="txtRegID"  type="text" aria-label="Enter Organization ID or Meter Number" placeholder="Organization ID or Meter Number" required>
+                                    <div class="invalid-feedback">You must enter your organization ID or Meter Number. If you are unsure, please call your utility company.</div>
+                                </div>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtRegEmail" name="txtRegEmail" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                                    <div class="invalid-feedback">You must enter an email</div>
+                                </div>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtRegFirstName" name="txtRegFirstName" type="text" aria-label="First Name" placeholder="First Name" required>
+                                    <div class="invalid-feedback">You must enter a First Name</div>
+                                </div>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtRegLastName" name="txtRegLastName" type="text" aria-label="Last Name" placeholder="Last Name" required>
+                                    <div class="invalid-feedback">You must enter a Last Name</div>
+                                </div>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtRegPassword" name="txtRegPassword" type="password" aria-label="Enter Password" placeholder="Password" required>
+                                    <div class="invalid-feedback">You must enter a Password</div>
+                                </div>
+                                <button type="submit" id = "btnRegister" class = "btn btn-primary col-12 mt-2 rounded-0">Create Account</button>
+                                <button type="button" id = "btnRegCancel" class = "btn btn-dark col-12 mt-2 rounded-0 btnLoginNav">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Reset Password Page-->
+            <div class="" id="divResetPassword" style="display:none;">
+                <div class="d-flex col-12 align-items-center justify-content-center vh-75">
+                    <div class="card col-12 col-md-8">
+                        <div class="card-header dashboard-header">
+                            <h4 class="text-center">Reset Password Form</h4>
+                        </div>
+                        <div class="card-body dashboard-body">
+                            <form>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtPassResetID" type="text" aria-label="Enter Meter Number or Organization Number" placeholder="Meter Number or Organization Number" required>
+                                    <div class="invalid-feedback">You must enter Meter Number or Organization Number. If you do not have it please call your utility company.</div>
+                                </div>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtPassResetRegEmail" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                                    <div class="invalid-feedback">You must enter an email</div>
+                                </div>
+                                <div class="">
+                                    <input class = "form-control mt-2 rounded-0" id = "txtPassResetNewPassword" type="password" aria-label="Enter New Password" placeholder="Password" required>
+                                    <div class="invalid-feedback">You must enter a New Password</div>
+                                </div>
+                                <button type="button" id = "buttonResetPasswordSubmit" class = "btn btn-primary col-12 mt-2 rounded-0">Reset Password</button>
+                                <button type="button" class="btn btn-secondary col-12 mt-2 rounded-0 btnLoginNav">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+
+
+            </div>
+            <!--Application Navigation Bar-->
+            <div class="row secondary align-content-start col-12 mb-4" id="divDashboardSubHeader" style="text-align: center; display: none;">
+                <div class="col-auto d-none p-2 ms-4" id="divMetersBtn">
+                    <button id="btnMeters" class="btn fa fa-chart-column fa-border fa-1x btn-success nav-btn current-page" data="#divDash"></button>
+                    <p class="mb-0">Meters</p>
+                </div>
+
+                <div class="col-auto d-none p-2 ms-2" id="divUserBtn">
+                    <button id="btnUser" class="btn fa fa-users-line fa-border fa-1x btn-secondary nav-btn" data="#divOrgs"></button>
+                    <p class="mb-0">Organization</p>
+                </div>
+
+                <div class="col-auto d-none p-2 ms-2" id="divProfileBtn">
+                    <button id="btnProfile" class="btn fa fa-address-card fa-border fa-1x btn-secondary nav-btn" data="#divProfile"></button>
+                    <p class="mb-0">User</p>
+                </div>
+
+                <div class="col-auto d-none p-2 ms-2" id="divAdminBtn">
+                    <button id="btnAdmin" class="btn fa fa-code fa-border fa-1x btn-secondary nav-btn" data="#divAdmin"></button>
+                    <p class="mb-0">Admin</p>
+                </div>
+
+                <div class="col-auto p-2 ms-2" id="divLogoutBtn">
+                    <button id="btnLogout" class="btn fa fa-right-from-bracket fa-border fa-1x btn-red"></button>
+                    <p class="mb-0">Logout</p>
+                </div>
+
+                <div class="col-auto d-none p-2 ms-2" id="divPendingBtn">
+                    <button id="btnPending" class="btn fa fa-right-from-bracket fa-border fa-1x btn-secondary" data="#divPending"></button>
+                    <p class="mb-0">Pending</p>
+                </div>
+            </div>
+
+            <!--Pending Page-->
+            <div class="col-12 row" id="divPending" style="display:none;">
+                <div class="col-12 align-content-center">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="card col-11 rounded-0">
+                            <div class="card-header dashboard-header rounded-0">
+                                Pending
+                            </div>                                
+                            <div class="card-body dashboard-body rounded-0 text-white" id="divPendingCardBody">
+                                Your account is pending, please contact an admin for your organization to approve you.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+
+
+            <!--Dashboard Page-->
+            <div class="" id="divDash" style="display:none;">
+                <div class="col-12 align-content-center">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="card col-11 rounded-0">
+                            <div class="card-header dashboard-header rounded-0">
+                                Dashboard
+                            </div>                                
+                            <div class="card-body dashboard-body rounded-0 text-white" id="divDashCardBody">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Organizations Page -->
+            <div class="col-12 row" id="divOrgs" style="display:none">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <div class="mb-3 col-11" id="divOrgsBody">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div class="col-12 row" id="divProfile" style="display:none">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="card rounded-0 col-11" id="divProfileCard">
+                        <div class="card-header rounded-0">
+                            <div class="mx-2">My Profile</div>
+                        </div>
+                        <div class="card-body rounded-0 d-flex flex-row justify-content-center">
+                            <div class="col-10 mx-3">
+                                <div>
+                                    <div id="divProfFullName"></div>
+                                    <div id="divProfAccID" class="p-2"></div>
+                                </div>
+
+                                <div class="col-12 mx-2">
+                                    <h5>USER DETAILS</h5>
+                                    <table id="tblProfile" class="table text-white col-12">
+                                        <tr>
+                                            <td>FIRSTNAME</td>
+                                            <td><div id="divProfFirstName" class="strPlaceholderSrc"></div></td>
+                                            <td class="d-flex justify-content-end"><button class="btn btn-success btnProfUpdate" data="First Name" field="first_name">Update</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>LASTNAME</td>
+                                            <td><div id="divProfLastName" class="strPlaceholderSrc"></div></td>
+                                            <td class="d-flex justify-content-end"><button class="btn btn-success btnProfUpdate" data="Last Name" field="last_name">Update</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>EMAIL</td>
+                                            <td><div id="divProfEmail" class="strPlaceholderSrc"></div></td>
+                                            <td class="d-flex justify-content-end"><button class="btn btn-success btnProfUpdate" data="Email" field="email">Update</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>PASSWORD</td>
+                                            <td><div id="divProfPassword">( secret )</div></td>
+                                            <td class="d-flex justify-content-end"><button class="btn btn-success btnProfUpdate" data="Password" field="password" id="btnProfUpdatePassword">Update</button></td>
+                                        </tr>
+                                        <tr id="tblRowOrgID">
+                                            <td>ORG ID</td>
+                                            <td><div id="divProfOrgID"></div></td>
+                                            <td><div></div></td>
+                                        </tr>
+                                        <tr id="tblRowMeterID" class="flex">
+                                            <td>METER ID</td>
+                                            <td><div id="divProfMeterID"></div></td>
+                                            <td><div></div></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Admin Page-->
+            <div class="col-12 row" id="divAdmin" style="display: none;">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <div class="mb-3 col-11 card rounded-0" id="divAdminCard">
+                        <div class="card-header rounded-0">
+                            Administrator Dashboard
+                        </div>
+                        <div class="card-body rounded-0">
+                            <div class="d-flex col-12">
+                                <div class="my-3 d-flex align-items-center col-6">
+                                    <div class="col-6">
+                                        Organizations :
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <button class="btn btn-secondary rounded-0 col-11" id="btnAdminCreateOrg">
+                                            Create New Organization
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="my-3 d-flex align-items-center col-6 justify-content-end">
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <button class="btn btn-secondary rounded-0 col-11" id="btnAdminCreateMeter">
+                                            Create New Meter
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+                        <!-- Static Admin Table below, should be tweaked to only generate the rows on login -->
+                            <table id="tblAdmin" class="table" style="background-color: white; padding: 20px; border: 1px solid #e0e0e0; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                <thead>
+                                    <tr class="text-white" style="background-color: #777777;">
+                                        <th>Org Name</th>
+                                        <th>Total Members</th>
+                                        <th>Total Meters</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblAdminBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+        </div>
+
+        <script src="https://kit.fontawesome.com/3786b55dae.js" crossorigin="anonymous"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.cookie.min.js"></script>
+        <script src="/js/sweetalert2.min.js"></script>
+
+        <script>
+            // below are some global variables that will be modified
+                // strUsersOrgName gets defined when the user is logged in, its used to see if the user is a part of an organization
+            strUserOrgName = '';
+            let ISORG = false;
+
+            /*
+            / --- document.ready() ---
+            / function runs as soon as the basic HTML above is loaded
+            / checks the users sessionStorage and looks for a sessionID, if there is one the user is considered logged in and moved to the dash
+            */
+            $( document ).ready(function() {
+                if(document.cookie.includes('strSessionID')) {
+                    $.ajax({
+                        url: '/api/user/session/validate',
+                        type: 'GET', // Use GET method
+                        dataType: 'json', // Expect JSON response
+                        success: function(result) {
+                            if (result.ResponseType == 'Success') {
+                                if(document.cookie.includes('strPageID')){
+                                    moveToTarget($.cookie("strPageID"));
+                                }
+                                renderPages();
+                                $('#divLandingPage').slideUp();
+                            }
+                        },
+                        complete: function() {
+                            stopLoginLoading();
+                        },
+                        error: function() {
+                            $.removeCookie('strSessionID', { path: '/' });   
+                            $.removeCookie("strPageID");                         
+                        }
+                    });
+
+                }
+            });
+
+            /*
+            / --- showLoginLoading() ---
+            / function disables input on the login form
+            / used to keep inputs from happening while we are sending an API call
+            */
+            function showLoginLoading() {
+                $('#txtLogEmail').prop('disabled', true);
+                $('#txtLogPassword').prop('disabled', true);
+                $('#btnLogin').prop('disabled', true);
+                $('#btnRegisterNav').prop('disabled', true);
+                $('#btnLoginLabel').hide();
+                $('#btnLoginSpinner').show();
+            }
+
+            /*
+            / --- stopLoginLoading() ---
+            / function enables input on the login form after it has been disabled
+            */
+            function stopLoginLoading(){
+                $('#txtLogEmail').prop('disabled', false);
+                $('#txtLogPassword').prop('disabled', false);
+                $('#btnLogin').prop('disabled', false);
+                $('#btnRegisterNav').prop('disabled', false);
+                $('#btnLoginLabel').show();
+                $('#btnLoginSpinner').hide();
+            }
+
+            /*
+            / --- btnLogin on click ---
+            / function runs when the login button is clicked
+            / first function validates that there is input for the email and password, if there is not they are flagged as invalid
+            / if there is input we make an API call to get a session ID for the user
+            / if a sessionID is returned we store it in sessionStorage and move the user to the dash
+            / if no sessionID is returned we fire a sweet alert asking them to make sure they enter a valid email and password
+            */
+            $( "#btnLogin" ).on( "click", function() {
+                console.log("Clicked login")
+                strEmail = $('#txtLogEmail').val();
+                strPassword = $('#txtLogPassword').val();
+                boolLogin = true;
+                if(strEmail == '') {
+                    $('#txtLogEmail').addClass('is-invalid');
+                    boolLogin = false;
+                } else
+                    $('#txtLogEmail').removeClass('is-invalid');
+                if(strPassword == '') {
+                    $('#txtLogPassword').addClass('is-invalid');
+                    boolLogin = false;
+                } else
+                    $('#txtLogPassword').removeClass('is-invalid');
+
+                event.preventDefault();
+
+                if(boolLogin) {
+                    console.log("starting login process");
+                    showLoginLoading();
+                    formData = {
+                        strEmail: $('#txtLogEmail').val(),
+                        strPassword: $('#txtLogPassword').val(),
+                    };
+                    console.log("sending AJAX request");
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/user/session/create",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                    }).done(function(data) {
+                        console.log(data);
+                        if(data.ResponseType == 'Success') {
+                            $('#divLogin').slideUp();
+                            $('#txtLogEmail').val('');
+                            $('#txtLogPassword').val('');
+                            renderPages()
+                        }
+                        stopLoginLoading();
+                    }).fail(function(data) {
+                        Swal.fire({
+                                icon: 'error',
+                                title: 'Incorrect username or password',
+                                text: 'Please enter the correct information and try again',
+                                width: '700px',
+                                showConfirmButton: false,
+                                showCloseButton: true,
+                                customClass: {
+                                    confirmButton: 'btn-secondary',
+                                    title: 'custom-red',
+                                    icon: 'custom-red',
+                                    popup: 'card-body rounded-0',
+                                    htmlContainer: 'mb-5'
+                                }
+                            })
+                        stopLoginLoading();
+                    });
+                }
+            });
+
+            /*
+            / --- btnRegNav on click ---
+            /   function runs when a button with the btnRegNav class is clicked
+            /   function moves the user between the login and the register page
+            */
+            $(".btnRegNav").on('click', function() {
+                $('#divLogin').slideToggle();
+                $('#divRegister').slideToggle();
+            })
+
+            /*
+            / --- btnRegister on click ---
+            /   function runs when btnRegister is clicked
+            /   first all fields in the registration form are validated to have input, if any do not the function marks them as invalid and ends
+            /   when all fields have values the function runs a POST API call to the server
+            /   if there are no errors we fire a sweet alert to let the user know their account has been created
+            /   the user is then transfered to the login page and all of the form entries are cleared
+            /   if there are any errors we fire another sweet alert to say that there was an error and to try again later
+            */
+            $("#btnRegister").on('click', function(event) {
+                strEmail = $('#txtRegEmail').val();
+                strPassword = $('#txtRegPassword').val();
+                strFirstName = $('#txtRegFirstName').val();
+                strLastName = $('#txtRegLastName').val();
+                intID = $('#txtRegID').val();
+                boolRegister = true;
+
+                if(strEmail == '') {
+                    $('#txtRegEmail').addClass('is-invalid');
+                    boolRegister = false;
+                } else
+                    $('#txtRegEmail').removeClass('is-invalid');
+                if(strPassword == '') {
+                    $('#txtRegPassword').addClass('is-invalid');
+                    boolRegister = false;
+                } else
+                    $('#txtRegPassword').removeClass('is-invalid');
+                if(strFirstName == '') {
+                    $('#txtRegFirstName').addClass('is-invalid');
+                    boolRegister = false;
+                } else
+                    $('#txtRegFirstName').removeClass('is-invalid');
+                if(strLastName == '') {
+                    $('#txtRegLastName').addClass('is-invalid');
+                    boolRegister = false;
+                } else
+                    $('#txtRegLastName').removeClass('is-invalid');
+                if(intID == '') {
+                    $('#txtRegID').addClass('is-invalid');
+                    boolRegister = false;
+                } else
+                    $('#txtRegID').removeClass('is-invalid');
+
+                event.preventDefault();
+
+                if(boolRegister) {
+                    formData = {
+                        strEmail: $('#txtRegEmail').val(),
+                        strPassword: $('#txtRegPassword').val(),
+                        strFirstName: $('#txtRegFirstName').val(),
+                        strLastName: $('#txtRegLastName').val(),
+                        intID: $('#txtRegID').val()
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/user/register",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                    }).done(function(data) {
+                        if(data.ResponseType == 'Success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'New account created!',
+                                text: 'Log in when you are ready',
+                                width: '700px',
+                                showCloseButton: true,
+                                showConfirmButton: false,
+                                customClass: {
+                                    title: 'custom-success',
+                                    icon: 'custom-success',
+                                    popup: 'card-body rounded-0',
+                                    htmlContainer: 'mb-5'
+                                }
+                            })
+
+                            $('#divLogin').slideToggle();
+                            $('#divRegister').slideToggle();
+
+                            // Emptying values on the form for in case they return to it.
+                            $('#txtRegEmail').val('');
+                            $('#txtRegPassword').val('');
+                            $('#txtRegFirstName').val('');
+                            $('#txtRegLastName').val('');
+                            $('#txtRegMeterNum').val('');
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops, something went wrong.',
+                                text: 'We were unable to create a new user, please try again in a few moments.',
+                                width: '700px',
+                                showCloseButton: true,
+                                showConfirmButton: false,
+                                customClass: {
+                                    title: 'custom-red',
+                                    icon: 'custom-red',
+                                    popup: 'card-body',
+                                    htmlContainer: 'mb-5'
+                                }
+                            })
+                        }
+                    }).fail(function(data) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops, something went wrong.',
+                            text: 'We were unable to create a new user, please try again in a few moments.',
+                            width: '700px',
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                            customClass: {
+                                    title: 'custom-red',
+                                    icon: 'custom-red',
+                                    popup: 'card-body',
+                                    htmlContainer: 'mb-5'
+                                }
+                        })
+                    });
+                }
+            });
+
+            /*
+            / --- btnLogout on click ---
+            /   function runs when the logout button is clicked
+            /   the function then disables the logout button and sends a DELETE API call to the server
+            /   if there are no errors the user is transferred back to the login page, and the sessionID is removed from sessionStorage
+            /   if there is an error we fire a sweet alert telling the user to contact an administrator
+            */
+            $("#btnLogout").on('click', function() {
+                $('btnLogout').prop('disabled', true);
+                $.ajax({
+                    url: '/api/user/session/delete',
+                    type: 'DELETE'
+                }).done(function(objResponse) {
+                    if(objResponse.Message) {
+                        $.removeCookie("strPageID");
+
+                        // Currently the page is completely reloaded on logout.
+                        // This is because of a problem with bokeh not properly destroying the graph embedded in the page
+                        //$('#divLogin').slideDown();
+                        location.reload();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops, something went wrong.',
+                            text: 'Session unable to be removed from the database, please contact administrator.',
+                            width: '700px',
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                            customClass: {
+                                    title: 'custom-red',
+                                    icon: 'custom-red',
+                                    popup: 'card-body',
+                                    htmlContainer: 'mb-5'
+                            }
+                        })
+                    }
+                    $('btnLogout').prop('disabled', false);
+                });
+            })
+
+            // Password Reset
+            $("#buttonResetPassword").on('click', function() {
+                landingNavClear('divResetPassword')
+                $('#divResetPassword').slideDown();
+            })
+
+            $("#buttonResetPasswordSubmit").on('click', function() {
+                intID = $('#txtPassResetID').val();
+                strEmail = $('#txtPassResetRegEmail').val();
+                strPassword = $('#txtPassResetNewPassword').val();
+                boolLogin = true;
+
+                if(intID == '') {
+                    $('#txtPassResetID').addClass('is-invalid');
+                    boolLogin = false;
+                }
+                else 
+                    $('#txtPassResetID').removeClass('is-invalid');
+
+                if(strEmail == '') {
+                    $('#txtPassResetRegEmail').addClass('is-invalid');
+                    boolLogin = false;
+                }
+                else 
+                    $('#txtPassResetRegEmail').removeClass('is-invalid');
+
+                if(strPassword == '') {
+                    $('#txtPassResetNewPassword').addClass('is-invalid');
+                    boolLogin = false;
+                }
+                else 
+                    $('#txtPassResetNewPassword').removeClass('is-invalid');
+
+                if(boolLogin == true){
+                    $.ajax({
+                        url: '/api/passwordReset',
+                        type: 'POST', // Use POST method
+                        contentType: 'application/json',
+                        dataType: 'json', // Expect JSON response
+                        data: JSON.stringify({
+                            strEmail: strEmail,
+                            strNewPassword: strPassword,
+                            intID: intID
+                        }),
+                        success: function(result) {
+                            if (result.Error){
+                                // Swal.fire({
+                                //             icon: 'error',
+                                //             title: 'Incorrect ID or Email',
+                                //             text: 'Please enter the correct information and try again'
+                                //         })   
+                                Swal.fire({
+                                            icon: 'error',
+                                            title: 'Incorrect ID or Email',
+                                            text: result.Error,
+                                            width: '700px',
+                                            showCloseButton: true,
+                                            showConfirmButton: false,
+                                            customClass: {
+                                                title: 'custom-red',
+                                                icon: 'custom-red',
+                                                popup: 'card-body',
+                                                htmlContainer: 'mb-5'
+                                            }
+                                        })   
+                            }
+                            else{
+                                $('#divResetPassword').slideToggle();
+                                $('#divLogin').slideToggle();
+                                Swal.fire({
+                                            icon: 'success',
+                                            title: 'Password Reset Successful',
+                                            width: '700px',
+                                            showConfirmButton: false,
+                                            showCloseButton: true,
+                                            customClass: {
+                                                title: 'custom-success',
+                                                icon: 'custom-success',
+                                                popup: 'card-body',
+                                                htmlContainer: 'mb-5'
+                                            }
+                                        })   
+                            }
+                        }
+                    });
+                }
+            })
+
+            function landingNavClear(strMoveto){
+                arrDivs = ["divLogin", "divLandingPage", "divRegister", "divResetPassword"];
+                arrDivs = arrDivs.filter(function(e) { return e !== strMoveto })
+
+                for(i = 0; i < arrDivs.length; i++){
+                    $('#' + arrDivs[i]).slideUp();
+                }
+            }
+            /*
+            / --- btnLogin on click ---
+            /   function runs when the login button on homepage is clicked
+            /   the function then hides the homepage and displays the login page
+            */
+            $(".btnLoginNav").on('click',function(){
+                landingNavClear('divLogin');
+                $('#divLogin').slideDown();
+            })
+
+            $(".imgHome").on('click',function(){
+                landingNavClear('divLandingPage');
+                $('#divLandingPage').slideDown();
+            })
+
+
+            /*
+            / --- btnRegisterAcct on click ---
+            /   function runs when the login button on homepage is clicked
+            /   the function then hides the homepage and displays the login page
+            */
+            $("#btnRegisterAcct").on('click',function(){
+                landingNavClear('divRegister')
+                $('#divRegister').slideDown();
+            })
+
+            /*
+            / --- btn-orgs-modify on click ---
+            /   executes when a modify button is clicked on the orgs page
+            */
+            $("#divOrgsBody").on('click', ".btn-orgs-modify", function(){
+
+                // intModUserID will be the accountID of the user we are modifying
+                intModUserID = $(this).attr('data-ID');
+                // we use jquery to grab the entire row of the table containing the button that was pressed
+                // this allows us to use the .find() function to get the other fields without needing a button and unique id for every cell in every row of the table
+
+
+                tblModUserRow = $(this).parent().parent();
+                strModUserEmail = $(tblModUserRow).find(".tblOrgEmail").html();
+                strModUserFirst = $(tblModUserRow).find(".tblOrgFirst").html();
+                strModUserLast = $(tblModUserRow).find(".tblOrgLast").html();
+                strModUserStatus = $(tblModUserRow).find(".tblOrgStatus").html();
+
+                // The select box in the popup is the strangest case we have. The box should have the current value have the selected attribute.
+                // since we can't run the logic inside of the sweet alert below we need to construct the selecter box here
+                strSelectHTML = `<select class="form-control rounded-0" id="txtSwalStatus"><option `;
+                if(strModUserStatus == "Pending"){
+                    strSelectHTML += 'selected '
+                }
+                strSelectHTML += `>Pending</option> <option `;
+                if(strModUserStatus == "Rejected"){
+                    strSelectHTML += 'selected ';
+                }
+                strSelectHTML += `>Rejected</option> <option `;
+                if(strModUserStatus == "Approved"){
+                    strSelectHTML += 'selected ';
+                }
+                strSelectHTML += `>Approved</option><option `;
+                if(strModUserStatus == "Admin"){
+                    strSelectHTML += 'selected ';
+                }
+                strSelectHTML += `>Administrator</option></select>`
+
+                // This is a sweetalert that will pop up on the screen, the html section is loaded with bootstrap code to format the form and default values to
+                // the current values of the selected user
+                //Elijah I'm not sure where to put my code for this one. Plz help!
+                Swal.fire({
+                    title:  'Modify User #' + intModUserID,
+                    // the HTML of the sweetalert uses bootstrap elements to format it perfectly
+                    // I've used tabs to align the divs as if they are in html and not just a string.
+                    html:   `<div class="col-12 content-center container">
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label for="txtSwalEmail" class="col-3">Email:</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control rounded-0" id="txtSwalEmail" placeholder="`+ strModUserEmail  +`">
+                                    </div>
+                                </div>
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label class="col-3" for="txtSwalEmail">First Name:</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control rounded-0" id="txtSwalFirst" placeholder="`+ strModUserFirst  +`">
+                                    </div>
+                                </div>
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label class="col-3" for="txtSwalEmail">Last Name:</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control rounded-0" id="txtSwalLast" placeholder="`+ strModUserLast  +`">
+                                    </div>
+                                </div>
+                                <div class="form-group row d-flex justify-content-start align-items-center mt-4">
+                                    <label class="col-3" for="txtSwalStatus">Status:</label>
+                                    <div class="col-9">
+                                        ` + strSelectHTML + `
+                                    </div>
+                                </div>
+                            </div> `,
+                    customClass: {
+                        popup: 'card-body rounded-0',
+                        actions: 'col-11 mb-3',
+                        confirmButton: 'col-12 rounded-0 btn-success'
+                    },
+                    showCloseButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonText:  'Submit',
+                    focusConfirm: false,
+                    focusClose: false,
+                    width: '700px',
+
+                    preConfirm: () => {
+                        // below lines gets the values of the form elements declared in the html above and lets them be used in the .then() call below
+                        return {    strEmail: Swal.getPopup().querySelector('#txtSwalEmail').value,
+                                    strFirst: Swal.getPopup().querySelector('#txtSwalFirst').value,
+                                    strLast: Swal.getPopup().querySelector('#txtSwalLast').value,
+                                    strStatus: Swal.getPopup().querySelector('#txtSwalStatus').value}
+                    }
+                }).then((result) => {
+                    if(result.value == null) {
+                        return;
+                    }
+
+                    // This block of code gets run after the sweetalert is closed, it will need to be redone in the future once we have an API to update the data in the database.
+                    if(result.value.strEmail != strModUserEmail && result.value.strEmail != '') {
+                        tblModUserRow.find(".tblOrgEmail").empty();
+                        tblModUserRow.find(".tblOrgEmail").append(result.value.strEmail);
+                    } else {
+                    }
+                    if(result.value.strFirst != strModUserFirst && result.value.strFirst != '') {
+                        tblModUserRow.find(".tblOrgFirst").empty();
+                        tblModUserRow.find(".tblOrgFirst").append(result.value.strFirst);
+                    } else {
+                    }
+                    if(result.value.strLast != strModUserLast && result.value.strLast != '') {
+                        tblModUserRow.find(".tblOrgLast").empty();
+                        tblModUserRow.find(".tblOrgLast").append(result.value.strLast);
+                    } else {
+                    }
+                    if(result.value.strStatus != strModUserStatus) {
+                        tblModUserRow.find(".tblOrgStatus").empty();
+                        tblModUserRow.find(".tblOrgStatus").append(result.value.strStatus);
+                    } else {
+                    }
+                    if(result.value.strStatus == "Administrator") {
+                        result.value.strStatus = "Admin"
+                    }
+                    $.ajax({
+                        url: '/api/organization',
+                        method: 'PUT',
+                        contentType: 'application/json',  // Indicate we're sending JSON
+                        data: JSON.stringify({
+                          'strNewEmail' : result.value.strEmail,
+                          'strOldEmail' : strModUserEmail,
+                          'strNewFirst' : result.value.strFirst,
+                          'strOldFirst' : strModUserFirst,
+                          'strNewLast' : result.value.strLast,
+                          'strOldLast' : strModUserLast,
+                          'strNewStatus' : result.value.strStatus,
+                          'strOldStatus' : strModUserStatus,
+                          'intModUserID' : intModUserID
+                        }),
+                        success: function(response) {
+                          console.log("Server responded with: ", response);
+                        },
+                        error: function(error) {
+                          console.log("Error from server: ", error);
+                        }
+                    });
+                })
+            })
+
+            // This function should be able to be called to go ahead and load all of the pages of the website
+            /*
+            / --- renderPages ---
+            /   function runs when a user is logged in
+            /   function should be used to render the website according to the users privliges.
+            / 
+            / TO DO:
+            /   Currently the function does not take privliges into account.
+            /   All pages are rendered and displayed regardless of if the user will be able to see them
+            */
+            function renderPages() {
+                $.ajax({
+                    url: 'api/user/permissions',
+                    type: 'GET',
+                    success: function(response) {
+                        $('#divLandingNavBar').slideUp();
+
+                        if(response.Level >= 5) {
+                            // right here we should render a pending page
+                            moveToTarget('btnPending');
+                        } 
+                        if(response.Level <= 4){
+                            $("#divMetersBtn").removeClass('d-none');
+                            populateBokehGraph();
+                            renderProfilePage();
+                        }    
+                        if(response.Level == 2 || response.Level == 0) {
+                            renderOrgsPage(response.Level);
+                        }
+                        if(response.Level <= 1) {
+                            renderAdminPage()
+                        }
+                        
+                        $('#divDashboardSubHeader').slideDown();
+                        $($('.current-page').attr('data')).slideDown();
+                    }
+                })
+            }
+
+            /*
+            / --- destroyPages() ---
+            /   function runs when a user logs out
+            /   This function exists to destroy the rendered pages. This prevents data being left loaded, and prevents issues when logging back in later.
+            */
+            function destroyPages() {
+                $('#divOrgsBody').empty();
+                $('#divDashAccordion').empty();
+                $('#tblAdminBody').empty();
+                // profile page has many smaller divs that need to be cleared rather than one large on like the other pages
+                destroyProfilePage();
+            }
+
+            /*
+            / --- renderOrgsPage() ---
+            /   function runs when the website is loaded, and the user has the permission to view it
+            /   function will render the organization of the logged in user with modify buttons for all members.
+            /
+            /   TO DO:
+            /       Function should render every organization's members for admins.
+            */
+            function renderOrgsPage(intPermsLevel) {
+                $("#divUserBtn").removeClass('d-none');
+                boolIsDisabled = true;
+                if(intPermsLevel < 1)
+                    boolIsDisabled = false;
+                intOrgNum = 0;
+                arrOrgs = [];
+                arrOrgsUserCount = [];
+                $.getJSON('/api/organization', function(results){    
+                    //createOrgsAccordion(0, results.strOrgName, results.usersArray.length)
+                    for(i = 0; i < results.usersArray.length; i++) {
+                        if(arrOrgs.includes(results.usersArray[i][0])) {
+                            arrOrgsUserCount[arrOrgs.indexOf(results.usersArray[i][0])]++;
+                        } else {
+                            arrOrgs.push(results.usersArray[i][0]);
+                            arrOrgsUserCount.push(1);
+                            //createOrgsAccordion(results.usersArray[i][0], results.usersArray[i][0], )
+                        }
+                        //appendToOrgsTable(i%2, results.usersArray[i], 0);
+                    }
+
+                    for(i=0; i < arrOrgs.length; i++) {
+                        createOrgsAccordion(i, arrOrgs[i], arrOrgsUserCount[i], boolIsDisabled)
+                    }
+
+                    for(i = 0; i < results.usersArray.length; i++) {
+                        if(arrOrgsUserCount[arrOrgs.indexOf(results.usersArray[i][0])] %2 == 0) {
+                            appendToOrgsTable(1, results.usersArray[i], arrOrgs.indexOf(results.usersArray[i][0]));
+                        } else {
+                            appendToOrgsTable(0, results.usersArray[i], arrOrgs.indexOf(results.usersArray[i][0]));
+                        }
+                        arrOrgsUserCount[arrOrgs.indexOf(results.usersArray[i][0])]--;
+                    }
+                })           
+            }
+            /*
+            $('#divOrgs').on('click', '.accordion-button', function(){
+                intMeterID = $(this).attr('meterID');
+                if($(this).hasClass('collapsed')) {
+                    //console.log('Meter should be collapsing now');
+                    $('#divMeter' + intMeterID + 'In').slideUp('fast', function() {
+                        $('#divMeter' + intMeterID + 'In').addClass('d-none');
+                    });
+                } else {
+                    $('#divMeter' + intMeterID + 'In').removeClass('d-none');
+                    $('#divMeter' + intMeterID + 'In').css('display', '');
+                }
+            })
+ */
+            /*
+            / --- createOrgsAccordion() ---
+            /   function runs when the organizations page is rendered through renderOrgsPage()
+            /   function will create an accordion on the organizations page
+            /   Inside he accordion will be a table with its header row and a unique ID to be able to append to multiple
+            */
+            function createOrgsAccordion(intOrgID, strOrgName, intNumUsers, boolIsDisabled){
+                strAccordion = `    <div class="accordion rounded-0" id="accOrg` + intOrgID + `">
+                                            <div class="accordion-item rounded-0">
+                                                <h2 class="accordion-header align-items-left rounded-0" id="accOrg` + intOrgNum + `Head">
+                                                    <button id="btnOrg` + intOrgID + `" class="accordion-button `;
+                                                    if(!boolIsDisabled) {
+                                                        strAccordion += " collapsed";
+                                                    }                        
+                                strAccordion +=     ` d-flex col-12 rounded-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#divOrg` + intOrgID + `Body"`;
+                                                    if(boolIsDisabled){
+                                                        strAccordion += " disabled";
+                                                    }
+                                strAccordion +=     `>
+                                                        <div class="col-1"></div>
+                                                        <div class="col-8">` + strOrgName + `</div>
+                                                        <div class="col-3" style="text-align: center;">
+                                                            ` + intNumUsers + ` Total Members
+                                                        </div>
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse `
+                                                if(boolIsDisabled) {
+                                                    strAccordion += "show";
+                                                }
+                                strAccordion += ` rounded-0" data-bs-parent="#accOrg` + intOrgID + `" id='divOrg` + intOrgID + `Body'">
+                                                    <div class="accordion-body rounded-0">
+                                                        <table id="tblOrg` + intOrgID + `" class="table" style="background-color: white; padding: 20px; border: 1px solid #e0e0e0; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                                            <thead>
+                                                                <tr class="text-white" style="background-color: #777777;">
+                                                                    <th>Email</th>
+                                                                    <th>First Name</th>
+                                                                    <th>Last Name</th>
+                                                                    <th>Status</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tblOrg` + intOrgID +`Body">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+
+                $('#divOrgsBody').append(strAccordion);
+            }
+
+            /*
+            / --- appendToOrgsTable() ---
+            /   function runs once for each user in an organization when the orgs page is rendered in renderOrgsPage()
+            /   function creates a new table row and appends it to its organizations table on the page.
+            */
+            function appendToOrgsTable(intBG, objUser, intOrgID) {
+                // user is a javascript array containing all of the data for a user to be added to a table.
+                if(intBG == 1) {
+                    strBG = "#b7b7b7";
+                } else {
+                    strBG = "#f0ecec";
+                }
+                strTableRow = ` <tr style="background-color: ` + strBG + `">
+                                    <td class="tblOrgEmail">` + objUser[1] + `</td>
+                                    <td class="tblOrgFirst">` + objUser[2] + `</td>
+                                    <td class="tblOrgLast">` + objUser[3] + `</td>
+                                    <td class="tblOrgStatus">` + objUser[4] + `</td>
+                                    <td class="d-flex justify-content-end mx-2"><button class="btn btn-primary rounded-0 btn-orgs-modify" data-ID="` + objUser[5] + `">Modify</button></td>
+                                </tr>`
+                                $('#tblOrg' +  intOrgID + 'Body').append(strTableRow);
+                //console.log(objUser);
+            }
+
+        // This function is called when we are populating a dashboard accordion div
+        // it gets a bokeh graph object from Shelby's API and embeds it into a div
+        // Currently it is static but that will be changed in iteration 4
+            function populateBokehGraph() {
+                fetch('/api/vis/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("populating bokeh graph");
+                    console.log(data);
+                    Bokeh.embed.embed_item(data, "divDashCardBody");
+                });
+            }
+
+            /*
+            / --- btnEditOrgName in divAdmin on click ---
+            /   function runs when a button with the btnEditOrgName class within the divAdmin div is clicked
+            /   function throws a sweetAlert form that takes user input and then fires an AJAX request
+            /
+            /   TO DO:
+            /       Fire an AJAX request using the data from the sweetalert form
+            */
+            $('#divAdmin').on('click', '.btnEditOrgName', function(){
+                // Variable declaration
+                intOrgNum = $(this).attr('data-OrgNum');
+                strCurrOrgName = $(this).parent().parent().parent().find('.adminOrgName').html();
+                // Sweetalert is fired with custom HTML. 
+                Swal.fire({
+                    title: 'Modify Organization #' + intOrgNum,
+                    html: `<div class="col-12 content-center container">
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label for="txtSwalOrgName" class="col-3">New Org Name:</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control rounded-0" id="txtSwalOrgName" placeholder="` + strCurrOrgName +`">
+                                    </div>
+                                </div>
+                            </div>`,
+                    confirmButtonText:  'Submit',
+                    focusConfirm: false,
+                    width: '700px',
+                    showCloseButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        popup: 'card-body rounded-0',
+                        actions: 'col-11 mb-3',
+                        confirmButton: 'col-12 rounded-0 btn-success'
+                    },
+                    // preConfirm returns the variable the user entered into the Sweetalert as result.value.strOrgName
+                    preConfirm: () => {
+                        return { strOrgName : Swal.getPopup().querySelector('#txtSwalOrgName').value}
+                    }
+                }).then((result) => {
+                    //if statement prevents the function from throwing an error when the user closes the Sweetalert without clicking the submit button
+                    if(result.value == null)  {
+                        return;
+                    }
+                    if(result.value.strOrgName != '') {
+                        $(this).parent().parent().parent().find(".adminOrgName").empty();
+                        $(this).parent().parent().parent().find(".adminOrgName").append(result.value.strOrgName);
+
+                        // Put AJAX statement below
+                        $.ajax({ // AJAX declaration for modOrgName() in adminpage.py
+                            url: '/api/adminpage/mod-org-name',
+                            method: 'PUT',
+                            contentType: 'application/json',  // Indicate we're sending JSON
+                            data: JSON.stringify({
+                                'intOrgNum' : intOrgNum,
+                              'strNewOrgName' : result.value.strOrgName,
+                              'strCurrOrgName' : strCurrOrgName
+                            }),
+                            success: function(response) {
+                              console.log("Server responded with: ", response);
+                            },
+                            error: function(error) {
+                              console.log("Error from server: ", error);
+                            }
+                        });
+                    }
+                });
+            })
+
+            /*
+            / --- btnAddMeter in divAdmin on click ---
+            /   function runs when a button with the btnAddMeter class within the divAdmin div is clicked
+            /   function throws a sweetAlert form that takes user input and then fires an AJAX request
+            /
+            /   TO DO:
+            /       Reword the sweetAlert form to be a dropdown menu instead of the text field
+            /       Fire an AJAX request using the data from the sweetalert form
+            */
+            $('#divAdmin').on('click', '.btnAddMeter', function(){
+                //variable declaration
+                intOrgNum = $(this).attr('data-OrgNum');
+                //sweetalert is fired
+                Swal.fire({
+                    title: 'Add Meter to Organization #' + intOrgNum,
+                    html: ` <div class="col-12 content-center container">
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label for="txtSwalMeterID" class="col-3">Meter ID:</label>
+                                    <div class="col-9">
+                                        <input type="text" min="0" class="form-control rounded-0" id="txtSwalMeterID" placeholder="ex. 12345">
+                                    </div>
+                                </div>
+                            </div>`,
+                    confirmButtonText:  'Submit',
+                    focusConfirm: false,
+                    focusClose: false,
+                    width: '700px',
+                    customClass: {
+                        popup: 'card-body rounded-0',
+                        actions: 'col-11 mb-3',
+                        confirmButton: 'col-12 rounded-0 btn-success'
+                    },
+                    showCloseButton: true,
+                    allowOutsideClick: false,
+                    //preConfirm passes the selected meterID to the then function at the end
+                    preConfirm: () => {
+                        return { intMeterID : Swal.getPopup().querySelector('#txtSwalMeterID').value}
+                    }
+                }).then((result) => {
+                    if(result.value == null) {
+                        return;
+                    }
+                    intMeterID = result.value.intMeterID;
+
+                    // Insert AJAX statement here
+                    $.ajax({ // AJAX declaration for addMeterToOrg() in adminpage.py
+                        url: '/api/adminpage/add-meter-to-org',
+                        method: 'PUT',
+                        contentType: 'application/json',  // Indicate we're sending JSON
+                        data: JSON.stringify({
+                            'intOrgNum' : intOrgNum,
+                          'intMeterID' : intMeterID
+                        }),
+                        success: function(response) {
+                          console.log("Server responded with: ", response);
+                        },
+                        error: function(error) {
+                          console.log("Error from server: ", error);
+                        }
+                    });
+                })
+            })
+        
+            /*
+            / --- btnAdminCreateOrg on click ---
+            /   function runs when a button with the btnAdminCreateOrg class is clicked
+            /   function fires a sweetalert which will get an organization name and create a new organization
+            /
+            /   TO DO:
+            /       make an AJAX request to add the new organization to the database.
+            */
+            $('#btnAdminCreateOrg').on('click', function(){
+                Swal.fire({
+                    title: 'Create New Organization',
+                    html: ` <div class="col-12 content-center container">
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label for="txtSwalOrgName" class="col-3">Organization Name:</label>
+                                    <div class="col-9">
+                                        <input type="text" min="0" class="form-control rounded-0" id="txtSwalOrgName" placeholder="ex. Zapps Electric">
+                                    </div>
+                                </div>
+                            </div>`,
+                        confirmButtonText: 'Submit',
+                        focusConfirm: false,
+                        width: '700px',
+                        customClass: {
+                            popup: 'card-body rounded-0',
+                            actions: 'col-11 mb-3',
+                            confirmButton: 'col-12 rounded-0 btn-success'
+                        },
+                        showCloseButton: true,
+                        allowOutsideClick: false,
+
+                        preConfirm: () => {
+                            return { strOrgName : Swal.getPopup().querySelector('#txtSwalOrgName').value}
+                        }
+                }).then((result) => {
+                    if(result.value == null) {
+                        return;
+                    }
+                    strOrgName = result.value.strOrgName;
+
+                    // put AJAX statement here
+                    $.ajax({ // AJAX declaration for the createNewOrg() in adminpage.py 
+                        url: '/api/adminpage/create-new-org',
+                        method: 'PUT',
+                        contentType: 'application/json',  // Indicate we're sending JSON
+                        data: JSON.stringify({
+                            'strOrgName' : strOrgName
+                        }),
+                        success: function(response) {
+                          console.log("Server responded with: ", response);
+                        },
+                        error: function(error) {
+                          console.log("Error from server: ", error);
+                        }
+                    });
+                })
+            })
+
+            /*
+            / --- btnAdminCreateMeter on click ---
+            /   function runs when a button with the btnAdminCreateMeter class is clicked
+            /   function fires a sweetalert which will get a MeterID and create a new meter in the database
+            /
+            /   TO DO:
+            /       make an AJAX request to add the new meter to the database
+            */
+            $('#btnAdminCreateMeter').on('click', function(){
+                Swal.fire({
+                    title: 'Register New Meter ID',
+                    html: ` <div class="col-12 content-center container">
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label for="txtSwalMeterID" class="col-3">Meter ID:</label>
+                                    <div class="col-9">
+                                        <input type="text" min="0" class="form-control rounded-0" id="txtSwalMeterID" placeholder="ex. 12345">
+                                    </div>
+                                </div>
+                            </div>`,
+                        confirmButtonText: 'Submit',
+                        focusConfirm: false,
+                        width: '700px',
+                        customClass: {
+                            popup: 'card-body rounded-0',
+                            actions: 'col-11 mb-3',
+                            confirmButton: 'col-12 rounded-0 btn-success'
+                        },
+                        showCloseButton: true,
+                        allowOutsideClick: false,
+
+                        preConfirm: () => {
+                            return { strMeterID : Swal.getPopup().querySelector('#txtSwalMeterID').value}
+                        }
+                }).then((result) => {
+                    if(result.value == null) {
+                        return;
+                    }
+                    strMeterID = result.value.strMeterID;
+
+                    // put AJAX statement here
+                    $.ajax({ // AJAX declaration for the createNewMeter() in adminpage.py 
+                        url: '/api/adminpage/create-new-meter',
+                        method: 'PUT',
+                        contentType: 'application/json',  // Indicate we're sending JSON
+                        data: JSON.stringify({
+                            'strMeterID' : strMeterID
+                        }),
+                        success: function(response) {
+                          console.log("Server responded with: ", response);
+                        },
+                        error: function(error) {
+                          console.log("Error from server: ", error);
+                        }
+                    });
+                })            })
+            
+            /*
+            / --- renderProfilePage on click ---
+            /   function runs when the page is rendered in the renderPages() function
+            /   function runs 2 ajax requests,
+            /        one to get the majority of profile information
+            /        and one to get the meter ID assigned to the user
+            */
+            function renderProfilePage(){
+                $("#divProfileBtn").removeClass('d-none');
+                if(document.cookie.includes('strSessionID')) {
+                    $.ajax({
+                        url: '/api/user',
+                        type: 'GET',
+                        success: function(results) {
+                            updateProfilePage(results.Details);
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops, something went wrong.',
+                                text: 'We were unable to display your profile. Please try again later.',
+                                width: '700px',
+                                showCloseButton: true,
+                                showConfirmButton: false,
+                                customClass: {
+                                    title: 'custom-red',
+                                    icon: 'custom-red',
+                                    popup: 'card-body rounded-0',
+                                    htmlContainer: 'mb-5'
+                                }
+                            });
+                        }
+                    });
+                    $.ajax({
+                        url: '/api/entity/meters',
+                        type: 'GET',
+                        success: function(results) {
+                            // May have to fix the logic for the below function later.
+                            updateProfileMeter(results.Details);
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops, something went wrong.',
+                                text: 'We were unable to display your profile. Please try again later.',
+                                width: '700px',
+                                showCloseButton: true,
+                                showConfirmButton: false,
+                                customClass: {
+                                    title: 'custom-red',
+                                    icon: 'custom-red',
+                                    popup: 'card-body rounded-0',
+                                    htmlContainer: 'mb-5'
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+            /*
+            / --- updateProfilePage() ---
+            /   function runs when a user object is created in renderProfilePage()
+            /   function takes in a user object and appends the information to the Profile page table
+            */
+            function updateProfilePage(user) {
+                $('#divProfAccID').append("Account #" + user.account_id);
+                $('#divProfFullName').append("<h5>" + user.last_name + ', ' + user.first_name + "</h5>")
+                $('#divProfFirstName').append(user.first_name);
+                $('#divProfLastName').append(user.last_name);
+                $('#divProfEmail').append(user.email);
+                if(user.org_id == null) {
+                    $('#tblRowOrgID').addClass('d-none');
+                } else {
+                    $('#tblRowMeterID').addClass('d-none');
+                    $('#divProfOrgID').append(user.org_id);
+                    ISORG = true;
+                }
+            }
+
+            /*
+            / --- destroyProfilePage() ---
+            /   function runs when the pages are destroyed in the destroyPages() function
+            /   function clears every field in the profile page table that is populated in updateProfilePage()
+            */
+            function destroyProfilePage() {
+                $('#divProfAccID').empty();
+                $('#divProfFullName').empty();
+                $('#divProfFirstName').empty();
+                $('#divProfLastName').empty();
+                $('#divProfEmail').empty();
+                $('#divProfOrgID').empty();
+                $('#divProfMeterID').empty();
+
+                $('#tblRowOrgID').removeClass('d-none');
+                $('#tblRowMeterID').removeClass('d-none');
+            }
+
+            /*
+            / --- updateProfileMeter() ---
+            /   function runs when a profile meter is appended 
+            /   function checks if a user is in an organization and if not adds their meterID to the profile page
+            */
+            function updateProfileMeter(meter) {
+                if (ISORG != true){
+                    $('#divProfMeterID').append(meter[0].meterID);
+                }
+            }
+
+            /*
+            / --- btnProfUpdate on click ---
+            /   function runs when a button with the btnProfUpdate class is clicked
+            /   function will provide the user with a way to update their own profile.
+            /
+            /   TO DO:
+            /       fire a dynamic sweetalert that prompts the user to update a specific field.
+            /       create an AJAX request to update the database with the new information
+            */
+            $( ".btnProfUpdate" ).on( "click", function() {
+                strType = $(this).attr('data');
+                strVarName = $(this).attr('field');
+                strPlaceholder = $(this).parent().parent().find('.strPlaceholderSrc').html();
+
+                Swal.fire({
+                    title: 'Update ' + strType,
+                    html: ` <div class="col-12 content-center container">
+                                <div class="form-group row d-flex align-items-center mt-4">
+                                    <label for="txtSwalInput" class="col-3">New ` + strType + `:</label>
+                                    <div class='col-9'>
+                                        <input type="text" class="form-control rounded-0" id="txtSwalInput" placeholder="` + strPlaceholder +`">
+                                    </div>
+                                </div>
+                            </div>`,
+                    confirmButtonText: 'Submit',
+                    focusConfirm: false,
+                    width: '700px',
+                    showCloseButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        popup: 'card-body rounded-0',
+                        actions: 'col-11 mb-3',
+                        confirmButton: 'col-12 rounded-0 btn-success'
+                    },
+                    preConfirm: () => {
+                        return { strInput : Swal.getPopup().querySelector('#txtSwalInput').value}
+                    }
+                }).then((result) => {
+                    if(result.value == null) {
+                        return;
+                    }
+                    
+
+                    if(result.value.strInput != '') {
+                        strInput = result.value.strInput;
+                        $.ajax({
+                            url: 'api/user/update',
+                            type: 'PATCH',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                [strVarName] : strInput
+                            }),
+                            success: function(results){
+                                console.log(results);
+                            },
+                            error: function() {
+                            }
+                        })
+                    }
+                })
+            })
+
+
+            /*
+            / --- nav-btn on click ---
+            /   function runs when any of the navigation buttons are clicked.
+            /   function moves the user to the target page and hides the old,
+            /       if the user is already on the target page nothing happens
+            /       the function will also mark the current page as a green button compared to the white buttons we have had before.
+            */
+
+            $(".nav-btn").on('click',function(){
+                currentBtn = $(".current-page");
+                if( $(this).attr('data') != currentBtn.attr('data') ) {
+                    currentBtn.removeClass("btn-success");
+                    currentBtn.removeClass("current-page");
+                    currentBtn.addClass("btn-secondary");                    
+                    $(this).removeClass('btn-secondary');
+                    $(this).addClass('btn-success');
+                    $(this).addClass('current-page');
+
+                    $(currentBtn.attr('data')).slideUp();
+                    $($(this).attr('data')).slideDown();
+                    $.cookie("strPageID", $(this).attr('id'));
+                } 
+            })
+
+            function moveToTarget(strTarget){
+                strTarget = "#" + strTarget;
+                currentBtn = $(".current-page");
+                if($(strTarget).attr('data') != currentBtn.attr('data') ) {
+                    currentBtn.removeClass("btn-success");
+                    currentBtn.removeClass("current-page");
+                    currentBtn.addClass("btn-secondary");                    
+                    $(strTarget).removeClass('btn-secondary');
+                    $(strTarget).addClass('btn-success');
+                    $(strTarget).addClass('current-page');
+                } 
+            }
+
+
+            /*
+            / --- renderAdminPage() ---
+            /   function runs when the admin page is rendered in renderPages
+            /   function makes an AJAX call to get a list of all organizations
+            /       then the function appends to the admin table the information of the organizaitons.
+            */
+            function renderAdminPage() {
+                $("#divAdminBtn").removeClass('d-none');
+
+                $.getJSON('api/adminpage', function(results){
+                    if(results.ResponseType == "Success"){
+                        strOrgName = "";
+                        intOrgID = "";
+                        intOrgMembers = "";
+                        strTableRow = "";
+                        console.log(results.orgsArray);
+                        for(i = 0; i < results.orgsArray.length; i++) {
+                            strOrgName = results.orgsArray[i][1];
+                            intOrgID = results.orgsArray[i][0];
+                            intOrgMembers = results.orgsArray[i][2];
+                            intOrgMeters = results.orgsArray[i][3];
+
+                            strTableRow = `<tr class = "text-black" style="background-color: `;
+                            if(i%2 == 0)
+                                strTableRow += `#f0ecec ;">`;
+                            else
+                                strTableRow += `#b7b7b7 ;">`;
+
+                            strTableRow += `<td>
+                                                <div class="d-flex">
+                                                    <button class="btn fas fa-clipboard fa-border fa-1x btn-success mx-2 btnEditOrgName" style="height: 35px; width: 35px; border: none;" data-OrgNum="` + intOrgID + `"></button>
+                                                    <div class="d-flex align-items-center adminOrgName">` + strOrgName + `</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center" style="height: 35px">
+                                                    ` + intOrgMembers + ` Members
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center" style="height: 35px">
+                                                    ` + intOrgMeters +  ` Meters
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center justify-content-end mx-3">
+                                                    <button class="btn btn-primary rounded-0 btnAddMeter" data-OrgNum="` + intOrgID + `">Add Meter</button>
+                                                </div>
+                                            </td>
+                                        </tr>`;
+                            
+                            $('#tblAdminBody').append(strTableRow);            
+                        }
+                    }
+                })
+            }
+
+        </script>
+    </body>
+</html>

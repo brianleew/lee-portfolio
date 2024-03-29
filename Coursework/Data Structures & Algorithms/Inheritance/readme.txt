@@ -1,0 +1,1 @@
+This coursework covers practicing or exercising C++ "inheritance" method. The original prompt, assignment requirements, are not available because I did not save it 4 years ago.

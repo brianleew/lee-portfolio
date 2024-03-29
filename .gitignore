@@ -1,0 +1,17 @@
+# MacOS files
+.DS_Store
+
+# IntelliJ
+**/.idea
+
+# Pycache
+**/__pycache__
+
+# venv
+**/venv
+
+# .env
+**/.env
+
+# Database data
+**/data

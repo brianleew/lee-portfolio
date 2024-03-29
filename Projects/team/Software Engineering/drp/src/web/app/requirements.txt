@@ -1,0 +1,12 @@
+flask
+mysql-connector-python
+python-dotenv
+bokeh
+pandas
+bcrypt
+gunicorn
+arrow
+statsmodels
+flask-cors
+redis[hiredis]
+pythonping

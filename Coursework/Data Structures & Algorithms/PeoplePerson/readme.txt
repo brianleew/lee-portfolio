@@ -1,0 +1,7 @@
+The coursework titled "PeoplePerson" involves designing and implementing a system to manage personal information using object-oriented programming principles. The system comprises classes for individuals (Person) and a data container for managing multiple individual records (PersonData).
+
+The Person class encapsulates attributes such as name, age, and weight, along with appropriate accessor and mutator methods for data manipulation. On the other hand, the PersonData class acts as a container for managing multiple Person objects, with functionalities for adding, removing, and accessing individual records.
+
+The coursework focuses on understanding concepts of encapsulation, inheritance, and dynamic memory allocation in C++. It involves implementing functionalities to manipulate data efficiently, including resizing the data structure dynamically to accommodate new records, as demonstrated in the provided code.
+
+With this coursework, I learned how to design and implement a modular and efficient data management system, enabled me to understand the importance of data organization and manipulation in real-world applications. Through this coursework, I gained practical experience in handling personal information data structures, essential for various software applications such as databases, contact lists, and personnel management systems.
