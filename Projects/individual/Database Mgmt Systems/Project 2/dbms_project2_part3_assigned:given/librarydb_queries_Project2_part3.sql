@@ -1,0 +1,52 @@
+-- 1. For each member (card number, first, middle and last name) and for each genre type, how many book copies of the type the member borrowed.
+-- If a member borrowed a given book more then once, it should be counted once.
+-- If the member Jen, Karen Green with card number 1 borrowed 5 non-fiction books and 0 fiction books, then the following tuples should be in the result of the query.
+-- 1 | Jen | Karen | Green | 1 | 5
+-- 1 | Jen | Karen | Green | 0 | 0
+-- ------------------------------
+-- WRITE_YOUR_QUERY_HERE for 1.
+-- ________________________________
+-- 2. For every author (ID, first, middle and last name), how many books he is an author of.
+-- There can be authors not associated with any book.
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 2.
+-- ________________________________
+-- 3. For every book copy (barcode, ISBN and title), how many times it was borrowed.
+-- There can be book copies that were never borrowed.
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 3.
+-- ________________________________
+-- 4. For every member (card number, first, middle and last name), how many loans he paid a late fee for.
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 4.
+-- ________________________________
+-- 5. For exery first, middle and last name in the database, the number of authors who have it and the number of members who have it.
+-- If there is 1 author named Jen, Karen Green and two members named Jen, Karen Green, then the following tuple should be in the result of the query.
+-- Jen | Karen | Green | 1 | 2
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 5.
+-- ________________________________
+-- 6. For every member (card number, first, middle and last name), how many book copies they borrowed in 2020, 2021 and 2022.
+-- If there is a member named Jen, Karen Green with card number 1, and she borrowed 10 book copies in 2021, 5 in 2022 and none in 2020, then the following tuple should be in the result of the query.analyze
+-- 1 | Jen | Karen | Green | 0 | 10 | 5
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 6.
+-- ________________________________
+-- 7. Starting from the first year in which some book copy was borrowed (do not assume any specific value), for each year, for each month of the year, how many book copies were borrowed that month.
+-- 2021 | 0 | 1 | 10 | 11 | 1 | 2 | 3 | 2 | 10 | 11 | 12 | 3 <--- 0 book copies were borrowed in January, 1 in Feb, 10 in March etc.
+-- 2022 | 1 | 2 | 5 | 21 | 23 | 12 | 6 | 2 | 7 | 1 | 0 | 0
+-- You may find this helpful ---> https://stackoverflow.com/questions/626797/sql-to-return-list-of-years-since-a-specific-year .
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 7.
+-- ________________________________
+-- 8. For each member (card number, first, middle and last name) the last day he borrowed anything and how many book copies he borrowed that day.
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 8.
+-- ________________________________
+-- 9. For each book (ISBN and title), the number of authors and the number of copies the library owns.
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 9.
+-- ________________________________
+-- 10. For each book (ISBN and title) the number of members who borrowed some of its copies and returned it on the same day.
+-- --------------------------------
+-- WRITE_YOUR_QUERY_HERE for 10.

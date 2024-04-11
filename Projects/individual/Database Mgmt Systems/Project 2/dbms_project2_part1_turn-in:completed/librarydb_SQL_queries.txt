@@ -1,0 +1,74 @@
+1. Pairs of people (their card numbers, first names and last names) with the same phone number, with no repetition.
+Ex1. If Ben Smith with card number 1 has the same phone number as Keith Smith with card number 2, then the following tuple should be in the result of the query:
+[1 | Ben | Smith | 2 | Keith | Smith] (or [2 | Keith | Smith | 1 | Ben | Smith])
+Tuple [2 | Keith | Smith | 1 | Ben | Smith] should not appear in the result of the query if the above tuple is in the result, as that would denote repetition of information.
+Tuple [1 | Keith | Smith | 1 | Keith | Smith] should not appear in the result of the query as it means that member with card number 1 has the same phone number as member with phone number 1, which is obvious.
+Ex2. If Ben Smith with card number 1 and Grace Smith with card number 3 have the same phone number as Keith Smith with card number 2, then the following tuples should be in the result of the query:
+[1 | Ben | Smith | 2 | Keith | Smith] (or [2 | Keith | Smith | 1 | Ben | Smith])
+[1 | Ben | Smith | 3 | Grace | Smith] (or [3 | Grace | Smith | 1 | Ben | Smith])
+[3 | Grace | Smith | 2 | Keith | Smith] (or [2 | Keith | Smith | 3 | Grace | Smith])
+--------------------------------
+select m1.card_no, m1.first_name, m1.last_name, m2.card_no, m2.first_name, m2.last_name
+from MEMBER as m1, MEMBER as m2
+where m1.phone_no = m2.phone_no and m1.card_no < m2.card_no
+________________________________
+2. Members (their card numbers, first, middle and last names) who hold a book longer than 2 weeks, along with the date they borrowed the book.
+--------------------------------
+select card_no, first_name, middle_name, last_name, date_borrowed
+from MEMBER natural join BORROW
+where date_returned is null and adddate(date_borrowed, 14) < now()
+________________________________
+3. Members (their card numbers, first, middle and last names) who didn't ever borrow any book.
+--------------------------------
+select card_no, first_name, middle_name, last_name
+from MEMBER
+where card_no not in (select card_no from BORROW)
+________________________________
+4. ISBNs and titles of books borrowed on 22/9/3.
+--------------------------------
+select ISBN, title
+from BORROW natural join COPY natural join BOOK
+where date_borrowed like '2022-09-03%'
+________________________________
+5. Genres.
+--------------------------------
+select genre
+from BOOK
+________________________________
+6. ISBNs and titles of books that have more than one author.
+--------------------------------
+select distinct ba1.ISBN,title
+from (BOOK_AUTHOR as ba1, BOOK_AUTHOR as ba2), BOOK
+where ba1.ISBN = BOOK.ISBN and ba1.ISBN = ba2.ISBN and ba1.author_id < ba2.author_id
+________________________________
+7. ISBN(s) and title(s) of all books written by Thomas Connolly(s), if any.
+--------------------------------
+select ISBN, title
+from BOOK natural join BOOK_AUTHOR natural join AUTHOR
+where first_name = 'Thomas' and last_name = 'Connolly'
+________________________________
+8. ISBN(s) and title(s) of all books borrowed by member 331, if any.
+--------------------------------
+select distinct ISBN, title
+from BOOK natural join COPY natural join BORROW
+where card_no = 331
+________________________________
+9. Member(s) (their card number) who renewed a book twice and still didn't return it, if any.
+--------------------------------
+select card_no
+from BORROW
+where renewals_no = 2 and date_returned is null
+________________________________
+10. Book(s) (their ISBN(s) and title(s)) with the highest edition.
+If there is a book with edition 9th, and no other book has a higher edition in the Libary database, then that book should be returned in the result (it's ISBN and title, to be specific).
+--------------------------------
+select ISBN, title
+from BOOK
+where edition not in (select b1.edition from BOOK as b1, BOOK as b2 where b1.edition < b2.edition)
+________________________________
+
+(4 points) Suggest 2 improvements/extensions to the schema of the Library database and provide justification in each case.
+
+1. We can change the attribute name genre in BOOK as genre_id numeric then create another table for GENRE with primary and foreign key as genre_id numeric which you can access genre_id from BOOK to not have duplicates of the same genre name but syntax being different (e.g. 'Textbook' and 'textbook' will be one tuple as one name with one genre_id so it saves space and better for organization).
+
+2. Another instance would be to add a credit_score attribute under the MEMBER relation. The score keeps track of the members' actions pertaining to book(s) they have checked out. For example, if they return a book on time that particular member gains +2, return a book over due +1, and checked out a book but never returned it, -1. Hence, the library can figure out which member is good or bad and maybe not let some people check out a new book until they return the previous one, etc.
