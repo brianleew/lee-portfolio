@@ -1,1 +1,1 @@
-readme plz
+This project is from CSC-2310-001, Object Oriented Programming and Design. This course was taken during Spring 2022 term (Jan - May) at Tennessee Tech University as an undergraduate, majoring in computer science. This project does not reflect the full workload of the course. However, it is a major individual project, my first introduction to Java, and my first taste of back-end coding that parses a JSON data as object that serves an organized purpose. There were multiple iterations during the developmental period and learning experience. 
