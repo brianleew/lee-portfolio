@@ -1,1 +1,1 @@
-This portfolio encompasses a few of my outstanding projects or coursework that I have either completed by myself or with a team during about 4 years of my undergraduate years (Aug 2019 - Dec 2023) as a computer science major. Enjoy!
+This portfolio encompasses a few of my outstanding projects or coursework, comprised of code, that I have either completed by myself or with a team during about 4 years of my undergraduate years (Aug 2019 - Dec 2023) as a computer science major. Enjoy!
