@@ -1,1 +1,1 @@
-describe and explain contents here later
+This course is called, "CSC-2510, Intro to DevOps with Unix". This course is primarily made up of labs with straightforward instructions carried out with additional instructions or example demonstrations provided by the instructor. The contents in this directory includes initially assigned prompts as well as its corresponding work represented as responses and code. The code is comprised of Bash scripts, and the infrastructure used primarily was Google Cloud VM Unix system.  

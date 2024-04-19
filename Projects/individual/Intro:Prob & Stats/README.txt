@@ -1,0 +1,1 @@
+The official name of the course is called, "MATH-3470 Intro to Probability and Statistics". 
