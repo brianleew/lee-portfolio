@@ -1,1 +1,1 @@
-The official name of the course is called, "MATH-3470 Intro to Probability and Statistics". 
+The official name of this course is called, "MATH-3470 Intro to Probability and Statistics". This "Data Analysis Project" involves my first introduction to R. 
