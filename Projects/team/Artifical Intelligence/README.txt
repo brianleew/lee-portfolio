@@ -1,1 +1,1 @@
-placeholder
+This group project was from CSC-4240, Artificial Intelligence. It was my first experience with using machine learning techniques or algorithms to train a model to accurately classify images of particular animals. There is a "final_project.pdf" listing all of the different components of requirements.
