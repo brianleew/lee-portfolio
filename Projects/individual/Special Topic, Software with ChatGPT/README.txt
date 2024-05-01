@@ -1,0 +1,1 @@
+This course is called, "CSC-4903, Special Topic: Software with ChatGPT". This was a special summer course that I took during the Summer term 2023. We explored, experimented, and utilized the new AI tool called, "Github Copilot". My individual project was choosing a project and working on it, which was creating a python game from scratch using Github Copilot.
