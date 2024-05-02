@@ -1,1 +1,1 @@
-placeholder for now
+This team project was from a course called, "CSC-3220, Fundamentals of Data Science". More details are inside ds-project.
