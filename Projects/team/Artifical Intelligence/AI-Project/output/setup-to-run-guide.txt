@@ -1,0 +1,26 @@
+SETUP-TO-RUN-GUIDE
+Go to "https://www.kaggle.com/datasets/ayushv322/animal-classification".
+Download the 226 MB data file.
+Extract it.
+It will create a folder called, "Data".
+Put "generate_csv.py" into the "Data" folder.
+Open "generate_csv.py" and edit the variable called "base_dir".
+As a default, it is an example of an absolute file path to the "Data" folder that has the 4 folders  and "generate_csv.py".
+Set "base_dir" to the absolute file path that matches your file tree structure.
+For example, "root_directory/to/the/project/4240-ai-final-project/Data".
+Open up terminal.
+cd into <../4240-ai-final-project/Data>
+(if you don't have Python on your machine, search online)
+type "python3 generate_csv.py" and press enter.
+Now, a file called "image_data.csv" is created in the "Data" folder.
+Open Orange application.
+(You may have to install an addon by going to options>Add-ons then select "Image Analytics")
+Open the "animal-classification.ows" file located in "../4240-ai-final-project".
+Double click the "File" widget already placed.
+Navigate to where "image_data.csv" is located and select it.
+
+Disclaimer:
+Since Orange's "Data Sampler" widget does not support splitting the test data into test and validation data, there is a second "Data Sampler" widget called "Test (Data Sample) 15 / Validation (Remaining Data) 15". This widget outputs "Data Sample" as test data and "Remaining Data" as validation data. As the default "animal-classification.ows" file, the test data (Data Sample) is connected to the "Test and Score" widget's "Test Data" input to produce the accuracy score of the model and the confusion matrix based on testing the model on the test data. If you want to test the model on the validation data, simply double click the link between "Test (Data Sample) 15 / Validation (Remaining Data) 15" and "Test and Score" widget. Next, remove the link by clicking on the black line. Finally, map the Remaining Data (validation data) box to Test Data box by click and dragging the line to create a link.
+
+
+For more information, first couple pages of the project document covers additional details.
